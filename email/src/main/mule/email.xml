@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:email="http://www.mulesoft.org/schema/mule/email" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="9c01fbce-beed-43bc-810f-ec2ba75e44ff" >
+		<http:listener-connection host="0.0.0.0" port="8080" />
+	</http:listener-config>
+	<email:smtp-config name="Email_SMTP" doc:name="Email SMTP" doc:id="475cb7df-b359-4a71-81de-5f92f3d46f40" >
+		<email:smtp-connection host="smtp.gmail.com" port="587" user="vannur.san143@gmail.com" password="9618391774" >
+			<email:properties >
+				<email:property key="mail.smtp.starttls.enable" value="true" />
+			</email:properties>
+		</email:smtp-connection>
+	</email:smtp-config>
+	<flow name="emailFlow" doc:id="e1bfc7e7-5569-47b7-9628-b197fa91b828" >
+		<http:listener doc:name="Listener" doc:id="7a231b56-52e4-4419-bd2f-75ce8c443a93" config-ref="HTTP_Listener_config" path="mail"/>
+		<logger level="INFO" doc:name="Logger" doc:id="7aa3dc53-9556-481c-90de-4ff507a5f304" message="welcome to email connector class"/>
+		<email:send doc:name="Send" doc:id="2a4f80e5-4385-4619-a5e5-40024c880a18" config-ref="Email_SMTP" fromAddress="vannur.san143@gmail.com" subject="welcom to mail ">
+			<email:to-addresses >
+				<email:to-address value="vannur.san@gmail.com" />
+				<email:to-address value="vannur.san143@gmail.com" />
+			</email:to-addresses>
+			<email:cc-addresses >
+				<email:cc-address value="vannur.mulesoft2022@gmail.com" />
+			</email:cc-addresses>
+		</email:send>
+	</flow>
+</mule>
